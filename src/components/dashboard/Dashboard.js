@@ -44,15 +44,15 @@ export default function Dashboard() {
   const [region, setRegion] = useState([]);
   const [regionName, setRegionName] = useState("");
 
-  const handleRegionChange = async (e) => {
+  const handleRegionChange = (e) => {
     e.preventDefault();
     let region = e.target.value;
     setRegionName(region);
     let resp;
     if (region == "") {
-      resp = await getOrders();
+      resp = getOrders();
     } else {
-      resp = await getOrdersByRegion(region);
+      resp = getOrdersByRegion(region);
     }
     setOrders(resp);
     setTopOrders(_.orderBy(resp, ["amount"], ["desc"]).splice(0, 5));
@@ -60,12 +60,12 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
-    getOrders().then((resp) => {
-      setOrders(resp);
-      setTopOrders(_.orderBy(resp, ["amount"], ["desc"]).splice(0, 5));
-      setBottomOrders(_.orderBy(resp, ["amount"], ["asc"]).splice(0, 5));
-      setRegion(_.uniq(_.map(resp, "region")));
-    });
+    let resp = getOrders();
+    setOrders(resp);
+    setTopOrders(_.orderBy(resp, ["amount"], ["desc"]).splice(0, 5));
+    setBottomOrders(_.orderBy(resp, ["amount"], ["asc"]).splice(0, 5));
+    setRegion(_.uniq(_.map(resp, "region")));
+
     return () => {
       setOrders([]);
       setTopOrders([]);

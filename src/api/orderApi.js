@@ -1,14 +1,14 @@
 import { handleResponse, handleError } from "./apiUtils";
 const baseUrl = process.env.API_URL + "/orders";
+const db = require("../../tools/db.json");
+import _ from "lodash";
 
 export function getOrders() {
-  return fetch(baseUrl).then(handleResponse).catch(handleError);
+  return db.orders;
 }
 
 export function getOrdersByRegion(region) {
-  return fetch(baseUrl + `?region=` + region)
-    .then(handleResponse)
-    .catch(handleError);
+  return _.filter(db.orders, (order) => order.region == region);
 }
 
 export function getProducts() {
