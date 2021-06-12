@@ -7,3 +7,5 @@
 ## 4. For prod build do - npm run build
 
 ## 5. Edit db.json to see beviour with different data
+
+##Author : Rahul Dubey
